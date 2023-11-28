@@ -19,6 +19,7 @@ using namespace std;
 #include "Trajet.h"
 #include "TrajetSimple.h"
 #include "TrajetCompose.h"
+#include <fstream>
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -102,6 +103,16 @@ void Catalogue::RechercherTrajet() const
     }
 }
 
+void Catalogue::ImporterTrajets()
+{
+    // TODO
+}
+
+void Catalogue::SauvegarderTrajets()
+{
+    // TODO : sauvegarder les trajets dans un fichier txt
+}
+
 void Catalogue::Menu()
 {
     // menu textuel avec les fonctionnalités représentées par des chiffres
@@ -114,7 +125,9 @@ void Catalogue::Menu()
         cout << "2. Rechercher les parcours disponibles\r\n";
         cout << "3. Ajouter un trajet simple\r\n";
         cout << "4. Ajouter un trajet composé (trajet non direct, composé de différentes étapes)\r\n";
-        cout << "5. Quitter\r\n";
+        cout << "5. Importer des trajets depuis un fichier txt\r\n";
+        cout << "6. Sauvegarder des trajets du catalogue dans un fichier txt\r\n";
+        cout << "7. Quitter\r\n";
         cout << "#####################################################################################################\r\n";
         cin >> choix;
         switch (choix)
@@ -137,11 +150,19 @@ void Catalogue::Menu()
             break;
         case 5:
             cout << "\r\n";
+            ImporterTrajets();
+            break;
+        case 6:
+            cout << "\r\n";
+            SauvegarderTrajets();
+            break;
+        case 7:
+            cout << "\r\n";
             cout << "Au revoir !\r\n";
             break;
         default:
             cout << "\r\n";
-            cout << "Veuillez saisir un chiffre entre 1 et 5\r\n";
+            cout << "Veuillez saisir un chiffre entre 1 et 7\r\n";
             break;
         }
     } while (choix != 5);

@@ -39,30 +39,6 @@ public:
     // Contrat :
     //
 
-    void Afficher() const;
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    void RechercherTrajet() const;
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    void SaisirTrajetSimple();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    void SaisirTrajetCompose();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
     //------------------------------------------------- Surcharge d'opérateurs
 
     //-------------------------------------------- Constructeurs - destructeur
@@ -88,6 +64,41 @@ public:
 
 protected:
     //----------------------------------------------------- Méthodes protégées
+    void Afficher() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void RechercherTrajet() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void SaisirTrajetSimple();
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void SaisirTrajetCompose();
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void ImporterTrajets();
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void SauvegarderTrajets();
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
     //----------------------------------------------------- Attributs protégés
     TableauDynamique collection;

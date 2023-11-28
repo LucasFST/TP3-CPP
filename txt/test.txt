@@ -1,0 +1,4 @@
+1,Lyon|Paris|0
+2,Lyon|Grenoble|2,Grenoble|Marseille|1
+1,Paris|Lille|1
+
