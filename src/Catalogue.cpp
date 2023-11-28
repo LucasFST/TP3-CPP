@@ -19,6 +19,7 @@ using namespace std;
 #include "Trajet.h"
 #include "TrajetSimple.h"
 #include "TrajetCompose.h"
+#include <limits>
 #include <fstream>
 //------------------------------------------------------------- Constantes
 
@@ -115,21 +116,31 @@ void Catalogue::SauvegarderTrajets()
 
 void Catalogue::Menu()
 {
-    // menu textuel avec les fonctionnalités représentées par des chiffres
     int choix;
     do
     {
         cout << "\r\n#####################################################################################################\r\n";
-        cout << "Bienvenue dans le menu du catalogue de trajets !\r\n";
+        cout << "Bienvenue dans le menu du catalogue de voyages !\r\n";
         cout << "1. Afficher les trajets du catalogue\r\n";
-        cout << "2. Rechercher les parcours disponibles\r\n";
+        cout << "2. Rechercher des itinéraires disponibles\r\n";
         cout << "3. Ajouter un trajet simple\r\n";
         cout << "4. Ajouter un trajet composé (trajet non direct, composé de différentes étapes)\r\n";
         cout << "5. Importer des trajets depuis un fichier txt\r\n";
         cout << "6. Sauvegarder des trajets du catalogue dans un fichier txt\r\n";
         cout << "7. Quitter\r\n";
+        cout << "4. Ajouter un trajet composé (trajet non direct, composé de plusieurs étapes)\r\n";
+        cout << "5. Quitter\r\n";
         cout << "#####################################################################################################\r\n";
-        cin >> choix;
+
+        if (!(cin >> choix))
+        {
+            cout << "\r\n";
+            cout << "Veuillez entrer un nombre. Saisie annulée.\r\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
         switch (choix)
         {
         case 1:
