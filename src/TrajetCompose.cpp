@@ -35,15 +35,36 @@ void TrajetCompose::Afficher() const
 } //----- Fin de Méthode
 
 void TrajetCompose::Saisir()
-// Algorithme :
-//
 {
+    string input;
     int nbTrajets = 0;
+    bool isNumber = false;
+
     do
     {
         cout << "Veuillez saisir le nombre de trajets composites (nombre >= 2 et saisie dans l'ordre chronologique) :\r\n";
-        cin >> nbTrajets;
-    } while (nbTrajets < 2);
+        cin >> input;
+
+        // Vérifier si l'entrée est un nombre
+        isNumber = true;
+        for (char c : input)
+        {
+            if (!isdigit(c))
+            {
+                isNumber = false;
+                break;
+            }
+        }
+
+        if (isNumber)
+        {
+            nbTrajets = stoi(input);
+        }
+        else
+        {
+            cout << "Erreur : Veuillez saisir un nombre valide." << endl;
+        }
+    } while (!isNumber || nbTrajets < 2);
 
     // Saisie du premier trajet
     Trajet *trajetSimple = new TrajetSimple;

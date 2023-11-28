@@ -19,6 +19,7 @@ using namespace std;
 #include "Trajet.h"
 #include "TrajetSimple.h"
 #include "TrajetCompose.h"
+#include <limits>
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -102,21 +103,91 @@ void Catalogue::RechercherTrajet() const
     }
 }
 
+// void Catalogue::RechercherTrajet() const
+// {
+//     if (collection.GetCardActuelle() == 0)
+//     {
+//         cout << "Le catalogue est vide\r\n";
+//     }
+//     else
+//     {
+//         string villeDepart;
+//         string villeArrivee;
+
+//         cout << "Veuillez saisir la ville de départ de votre voyage:\r\n";
+//         cin >> villeDepart;
+//         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorer le reste de la ligne
+
+//         cout << "Veuillez saisir la ville d'arrivée de votre voyage:\r\n";
+//         cin >> villeArrivee;
+//         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorer le reste de la ligne
+
+//         // Vérifier que les caractères saisis sont valides
+//         bool isVilleDepartValid = true;
+//         bool isVilleArriveeValid = true;
+
+//         for (char c : villeDepart)
+//         {
+//             if (!isalpha(c) && c != '-' && c != '\'')
+//             {
+//                 isVilleDepartValid = false;
+//                 break;
+//             }
+//         }
+
+//         for (char c : villeArrivee)
+//         {
+//             if (!isalpha(c) && c != '-' && c != '\'')
+//             {
+//                 isVilleArriveeValid = false;
+//                 break;
+//             }
+//         }
+
+//         if (!isVilleDepartValid || !isVilleArriveeValid)
+//         {
+//             cout << "La saisie des villes est invalide. Veuillez entrer uniquement des lettres, des tirets '-' et des apostrophes '\''." << endl;
+//             return;
+//         }
+
+//         cout << "\r\nVoici les trajets correspondants à votre recherche :\r\n\r\n";
+//         for (unsigned int i = 0; i < collection.GetCardActuelle(); i++)
+//         {
+//             if (collection.GetTableau()[i]->GetVilleDepart() == villeDepart && collection.GetTableau()[i]->GetVilleArrivee() == villeArrivee)
+//             {
+//                 cout << "Trajet n°" << i + 1 << " : \r\n";
+//                 collection.GetTableau()[i]->Afficher();
+//                 cout << "\r\n";
+//             }
+//         }
+//     }
+// }
+
+
+
 void Catalogue::Menu()
 {
-    // menu textuel avec les fonctionnalités représentées par des chiffres
     int choix;
     do
     {
         cout << "\r\n#####################################################################################################\r\n";
-        cout << "Bienvenue dans le menu du catalogue de trajets !\r\n";
+        cout << "Bienvenue dans le menu du catalogue de voyages !\r\n";
         cout << "1. Afficher les trajets du catalogue\r\n";
-        cout << "2. Rechercher les parcours disponibles\r\n";
+        cout << "2. Rechercher des itinéraires disponibles\r\n";
         cout << "3. Ajouter un trajet simple\r\n";
-        cout << "4. Ajouter un trajet composé (trajet non direct, composé de différentes étapes)\r\n";
+        cout << "4. Ajouter un trajet composé (trajet non direct, composé de plusieurs étapes)\r\n";
         cout << "5. Quitter\r\n";
         cout << "#####################################################################################################\r\n";
-        cin >> choix;
+        
+        if (!(cin >> choix))
+        {
+            cout << "\r\n";
+            cout << "Veuillez entrer un nombre. Saisie annulée.\r\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        
         switch (choix)
         {
         case 1:
@@ -141,11 +212,13 @@ void Catalogue::Menu()
             break;
         default:
             cout << "\r\n";
-            cout << "Veuillez saisir un chiffre entre 1 et 5\r\n";
+            cout << "Veuillez entrer un nombre entre 1 et 5\r\n";
             break;
         }
     } while (choix != 5);
 }
+
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 
