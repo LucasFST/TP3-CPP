@@ -104,11 +104,6 @@ void Catalogue::RechercherTrajet() const
     }
 }
 
-void Catalogue::ImporterTrajets()
-{
-    // TODO
-}
-
 void Catalogue::SauvegarderTrajets()
 {
     // TODO : sauvegarder les trajets dans un fichier txt
@@ -128,8 +123,6 @@ void Catalogue::Menu()
         cout << "5. Importer des trajets depuis un fichier txt\r\n";
         cout << "6. Sauvegarder des trajets du catalogue dans un fichier txt\r\n";
         cout << "7. Quitter\r\n";
-        cout << "4. Ajouter un trajet composé (trajet non direct, composé de plusieurs étapes)\r\n";
-        cout << "5. Quitter\r\n";
         cout << "#####################################################################################################\r\n";
 
         if (!(cin >> choix))
@@ -161,7 +154,7 @@ void Catalogue::Menu()
             break;
         case 5:
             cout << "\r\n";
-            ImporterTrajets();
+            ImporterTrajets("txt/test.txt");
             break;
         case 6:
             cout << "\r\n";
@@ -176,8 +169,72 @@ void Catalogue::Menu()
             cout << "Veuillez saisir un chiffre entre 1 et 7\r\n";
             break;
         }
-    } while (choix != 5);
+    } while (choix != 7);
 }
+
+
+void Catalogue::ImporterTrajets(const std::string& filePath)
+{
+    std::ifstream file(filePath);
+    if (!file.is_open())
+    {
+        cerr << "Failed to open file: " << filePath << endl;
+        return;
+    }
+
+    std::string line;
+    std::getline(file, line);
+    int nb_line = stoi(line.substr(0, 1));
+    for (int i = 0; i < nb_line; i++)
+    {
+        std::getline(file, line);
+        int nb_traj = stoi(line.substr(0, 1));
+
+        if (nb_traj == 1)
+        {
+            cout << "Trajet simple :" << endl;
+            cout << line << "\n\n" << endl;
+
+            line.erase(0, 2);
+            std::string depart = line.substr(0, line.find(","));
+            line.erase(0, line.find(",")+1);
+            std::string arrivee = line.substr(0, line.find(","));
+            line.erase(0, line.find(",")+1);
+            int moyen = stoi(line.substr(0, 1));
+            line.erase(0, 2);
+
+            TrajetSimple *ptrTrajet;
+            ptrTrajet = new TrajetSimple;
+            ptrTrajet->ImporterTrajetSimple(depart.c_str(), arrivee.c_str(), (MoyenTransport)moyen);
+            collection.Ajouter(ptrTrajet);
+        }
+        else
+        {
+            for (int j = 0; j < nb_traj; j++)
+            {
+                std::getline(file, line);
+
+                cout << "Trajet composé :" << endl;
+                cout << line << "\n\n" << endl;
+
+                line.erase(0, 2);
+                std::string depart = line.substr(0, line.find(","));
+                line.erase(0, line.find(",")+1);
+                std::string arrivee = line.substr(0, line.find(","));
+                line.erase(0, line.find(",")+1);
+                int moyen = stoi(line.substr(0, 1));
+                line.erase(0, 2);
+
+                cout << "depart :" << depart << endl;
+                cout << "arrivee :" << arrivee << endl;
+                cout << "moyen :" << moyen << endl;
+            }
+        }
+    }
+
+    file.close();
+}
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 

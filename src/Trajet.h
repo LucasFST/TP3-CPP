@@ -10,6 +10,14 @@
 #if !defined(TRAJET_H)
 #define TRAJET_H
 
+enum MoyenTransport
+{
+    AUTO,
+    TRAIN,
+    BATEAU,
+    AVION
+};
+
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
@@ -52,6 +60,8 @@ public:
     // Contrat :
     //
 
+    // virtual void ImporterTrajetSimple(const char *villeDepart, const char *villeArrivee, MoyenTransport moyenTransport) const = 0;
+    
     //------------------------------------------------- Surcharge d'opérateurs
     // virtual Trajet &operator=(const Trajet &unTrajet);
     // Mode d'emploi :

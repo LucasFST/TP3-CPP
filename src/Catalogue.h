@@ -88,7 +88,7 @@ protected:
     // Contrat :
     //
 
-    void ImporterTrajets();
+    void ImporterTrajets(const std::string& filePath);
     // Mode d'emploi :
     //
     // Contrat :
@@ -99,6 +99,7 @@ protected:
     //
     // Contrat :
     //
+
 
     //----------------------------------------------------- Attributs protégés
     TableauDynamique collection;

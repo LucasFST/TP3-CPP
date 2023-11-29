@@ -15,13 +15,13 @@
 //------------------------------------------------------------- Constantes
 const int TAILLE_MAX_VILLE = 50;
 //------------------------------------------------------------------ Types
-enum MoyenTransport
-{
-    AUTO,
-    TRAIN,
-    BATEAU,
-    AVION
-};
+// enum MoyenTransport
+// {
+//     AUTO,
+//     TRAIN,
+//     BATEAU,
+//     AVION
+// };
 //------------------------------------------------------------------------
 // Rôle de la classe <TrajetSimple>
 //
@@ -40,6 +40,8 @@ public:
     // "De villeDepart à Ville d'arrivée en moyenTransport"
     // Contrat :
     //
+
+    void ImporterTrajetSimple(const char *villeDepart, const char *villeArrivee, MoyenTransport moyenTransport);
 
     virtual void Saisir();
     // Mode d'emploi :
