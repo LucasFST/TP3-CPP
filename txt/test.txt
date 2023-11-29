@@ -2,3 +2,24 @@
 2,Lyon|Grenoble|2,Grenoble|Marseille|1
 1,Paris|Lille|1
 
+
+PROPOSITION NOUVEAU FORMAT :
+
+header avec le nb total de trajets
+
+trajet simple :
+1,villeDep,villeArr,moyenTransport
+
+trajet compose :
+nbTrajetsComposites,villeDep,villeArr
+trajetComposite1
+...
+trajetCompositeN
+
+exemple :
+3
+1,Lyon,Paris,0
+2,Lyon,Marseille
+1,Lyon,Grenoble,2
+1,Grenoble,Marseille,1
+1,Paris,Lille,0

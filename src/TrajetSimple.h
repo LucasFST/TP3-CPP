@@ -59,6 +59,12 @@ public:
     // Contrat :
     //
 
+    virtual void Ecrire(std::ofstream &fichier) const;
+    // Mode d'emploi :
+    // Ecrire le trajet
+    // Contrat :
+    //
+
     //------------------------------------------------- Surcharge d'opérateurs
     // TrajetSimple &operator=(const TrajetSimple &unTrajetSimple);
     // Mode d'emploi :

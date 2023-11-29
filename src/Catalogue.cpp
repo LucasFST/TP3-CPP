@@ -112,10 +112,28 @@ void Catalogue::ImporterTrajets()
 void Catalogue::SauvegarderTrajets()
 {
     // TODO : sauvegarder les trajets dans un fichier txt
+    string nomFichier;
+    cout << "Veuillez saisir le nom du fichier dans lequel vous souhaitez sauvegarder les trajets du catalogue :\r\n";
+    cin >> nomFichier;
+    ofstream fichier(nomFichier + ".txt", ios::out | ios::trunc);
+    if (fichier)
+    {
+        fichier << collection.GetCardActuelle() << "\r\n";
+        for (unsigned int i = 0; i < collection.GetCardActuelle(); i++)
+        {
+            collection.GetTableau()[i]->Ecrire(fichier);
+        }
+        fichier.close();
+    }
+    else
+    {
+        cout << "Erreur : impossible de créer et/ou d'ouvrir le fichier spécifié." << endl;
+    }
 }
 
 void Catalogue::Menu()
 {
+    // menu textuel avec les fonctionnalités représentées par des chiffres
     int choix;
     do
     {
@@ -128,8 +146,6 @@ void Catalogue::Menu()
         cout << "5. Importer des trajets depuis un fichier txt\r\n";
         cout << "6. Sauvegarder des trajets du catalogue dans un fichier txt\r\n";
         cout << "7. Quitter\r\n";
-        cout << "4. Ajouter un trajet composé (trajet non direct, composé de plusieurs étapes)\r\n";
-        cout << "5. Quitter\r\n";
         cout << "#####################################################################################################\r\n";
 
         if (!(cin >> choix))
@@ -140,7 +156,7 @@ void Catalogue::Menu()
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
         }
-
+        // cin >> choix;
         switch (choix)
         {
         case 1:
@@ -176,7 +192,7 @@ void Catalogue::Menu()
             cout << "Veuillez saisir un chiffre entre 1 et 7\r\n";
             break;
         }
-    } while (choix != 5);
+    } while (choix != 7);
 }
 
 //------------------------------------------------- Surcharge d'opérateurs

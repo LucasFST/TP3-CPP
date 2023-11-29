@@ -13,6 +13,7 @@
 //-------------------------------------------------------- Include système
 #include <iostream>
 #include <cstring>
+#include <fstream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -80,6 +81,14 @@ void TrajetSimple::Saisir()
     {
         cout << "Veuillez saisir le moyen de transport : (0 : AUTO, 1 : TRAIN, 2 : BATEAU, 3 : AVION)\r\n";
         cin >> moyenTransportTmp;
+        // Vérifier si l'entrée est un nombre
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(256, '\n');
+            moyenTransportTmp = -1;
+            cout << "Erreur : Veuillez saisir un nombre valide." << endl;
+        }
     } while (moyenTransportTmp < 0 || moyenTransportTmp > 3);
     moyenTransport = (MoyenTransport)moyenTransportTmp;
 
@@ -93,6 +102,11 @@ const char *TrajetSimple::GetVilleDepart() const
 const char *TrajetSimple::GetVilleArrivee() const
 {
     return villeArrivee;
+}
+
+void TrajetSimple::Ecrire(ofstream &fichier) const
+{
+    fichier << 1 << "," << villeDepart << "," << villeArrivee << "," << moyenTransport << "\r\n";
 }
 
 // //------------------------------------------------- Surcharge d'opérateurs

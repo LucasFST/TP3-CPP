@@ -41,6 +41,12 @@ public:
     // Contrat :
     //
 
+    virtual void Ecrire(std::ofstream &fichier) const;
+    // Mode d'emploi :
+    // Ecrire le trajet
+    // Contrat :
+    //
+
     virtual const char *GetVilleDepart() const;
     // Mode d'emploi :
     // Récupère la ville de départ du trajet composé
