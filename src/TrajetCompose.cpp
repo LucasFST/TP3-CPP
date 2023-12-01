@@ -34,6 +34,7 @@ void TrajetCompose::Afficher() const
     }
 } //----- Fin de Méthode
 
+
 void TrajetCompose::Saisir()
 {
     string input;
@@ -86,6 +87,11 @@ void TrajetCompose::Saisir()
     }
 
 } //----- Fin de Méthode
+
+void TrajetCompose::addTableau(TrajetSimple *ptrTrajet)
+{
+    this->tableauTrajets.Ajouter(ptrTrajet);
+}
 
 const char *TrajetCompose::GetVilleDepart() const
 // Algorithme :
