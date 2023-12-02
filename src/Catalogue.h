@@ -16,7 +16,7 @@
 
 //------------------------------------------------------------------ Types
 
-enum ToImport
+enum TypeTrajet
 {
     SIMPLE,
     COMPOSE,
@@ -102,23 +102,41 @@ protected:
     // Contrat :
     //
 
-    void ImporterTrajetsParVille(const std::string& filePath, ParVille parVille, std::string ville);
+    void ImporterTrajetsParVille(const std::string &filePath, ParVille parVille, std::string ville);
 
-    void ImporterTrajets(const std::string& filePath, ToImport toImport);
+    void ImporterTrajets(const std::string &filePath, TypeTrajet TypeTrajet);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    void SauvegarderTrajets();
+    void SauvegarderTrajetsMenu() const;
     // Mode d'emploi :
     //
     // Contrat :
     //
 
+    void SauvegarderTrajetsParType(TypeTrajet typeTrajet) const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    void SauvegarderTrajetsParVille(ParVille parVille) const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
     //----------------------------------------------------- Attributs protégés
     TableauDynamique collection;
+
+private:
+    bool VerifierNomFichierSauvegarde(std::string nomFichier) const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 };
 
 //-------------------------------- Autres définitions dépendantes de <Catalogue>

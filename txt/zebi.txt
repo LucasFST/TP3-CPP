@@ -1,6 +1,0 @@
-3
-1,Lille,Paris,1
-2,Paris,Marseille
-1,Paris,Lyon,3
-1,Lyon,Marseille,2
-1,Nantes,Rennes,0
