@@ -107,10 +107,28 @@ void Catalogue::RechercherTrajet() const
 void Catalogue::SauvegarderTrajets()
 {
     // TODO : sauvegarder les trajets dans un fichier txt
+    string nomFichier;
+    cout << "Veuillez saisir le nom du fichier dans lequel vous souhaitez sauvegarder les trajets du catalogue :\r\n";
+    cin >> nomFichier;
+    ofstream fichier(nomFichier + ".txt", ios::out | ios::trunc);
+    if (fichier)
+    {
+        fichier << collection.GetCardActuelle() << "\r\n";
+        for (unsigned int i = 0; i < collection.GetCardActuelle(); i++)
+        {
+            collection.GetTableau()[i]->Ecrire(fichier);
+        }
+        fichier.close();
+    }
+    else
+    {
+        cout << "Erreur : impossible de créer et/ou d'ouvrir le fichier spécifié." << endl;
+    }
 }
 
 void Catalogue::Menu()
 {
+    // menu textuel avec les fonctionnalités représentées par des chiffres
     int choix;
     do
     {
@@ -133,7 +151,7 @@ void Catalogue::Menu()
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
         }
-
+        // cin >> choix;
         switch (choix)
         {
         case 1:

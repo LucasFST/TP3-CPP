@@ -13,6 +13,7 @@
 //-------------------------------------------------------- Include système
 #include <iostream>
 #include <cstring>
+#include <fstream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -106,6 +107,16 @@ const char *TrajetCompose::GetVilleArrivee() const
 {
     return tableauTrajets.GetTableau()[tableauTrajets.GetCardActuelle() - 1]->GetVilleArrivee();
 } //----- Fin de Méthode
+
+void TrajetCompose::Ecrire(ofstream &fichier) const
+{
+    fichier << tableauTrajets.GetCardActuelle() << "," << GetVilleDepart() << "," << GetVilleArrivee() << "\r\n";
+
+    for (unsigned int i = 0; i < tableauTrajets.GetCardActuelle(); i++)
+    {
+        tableauTrajets.GetTableau()[i]->Ecrire(fichier);
+    }
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 // TrajetCompose &TrajetCompose::operator=(const TrajetCompose &unTrajetCompose)
