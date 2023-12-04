@@ -128,6 +128,12 @@ protected:
     // Contrat :
     //
 
+    void SauvegarderTrajetsParIndice() const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
     //----------------------------------------------------- Attributs protégés
     TableauDynamique collection;
 

@@ -21,7 +21,6 @@ using namespace std;
 #include "TrajetCompose.h"
 #include <limits>
 #include <fstream>
-#include <sstream>
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -243,6 +242,13 @@ void Catalogue::RechercherTrajet() const
 
 void Catalogue::SauvegarderTrajetsMenu() const
 {
+
+    if (collection.GetCardActuelle() == 0)
+    {
+        cout << "Le catalogue est vide, il n'y a aucun trajet à sauvegarder.\r\n";
+        return;
+    }
+
     int choix;
     do
     {
@@ -255,7 +261,8 @@ void Catalogue::SauvegarderTrajetsMenu() const
         cout << "4. Sauvegarder les trajets du catalogue par ville de départ\r\n";
         cout << "5. Sauvegarder les trajets du catalogue par ville d'arrivée\r\n";
         cout << "6. Sauvegarder les trajets du catalogue par ville de départ et d'arrivée\r\n";
-        cout << "7. Quitter\r\n";
+        cout << "7. Sauvegarder les trajets du catalogue par indice\r\n";
+        cout << "8. Quitter\r\n";
         cout << "#####################################################################################################\r\n";
 
         if (!(cin >> choix))
@@ -295,14 +302,18 @@ void Catalogue::SauvegarderTrajetsMenu() const
             break;
         case 7:
             cout << "\r\n";
+            SauvegarderTrajetsParIndice();
+            break;
+        case 8:
+            cout << "\r\n";
             cout << "Au revoir !\r\n";
             break;
         default:
             cout << "\r\n";
-            cout << "Veuillez saisir un chiffre entre 1 et 7\r\n";
+            cout << "Veuillez saisir un chiffre entre 1 et 8\r\n";
             break;
         }
-    } while (choix != 7);
+    } while (choix != 8);
 }
 
 void Catalogue::SauvegarderTrajetsParType(TypeTrajet typeTrajet) const
@@ -478,6 +489,63 @@ void Catalogue::SauvegarderTrajetsParVille(ParVille parVille) const
             fichier.close();
             return;
         }
+    }
+    else
+    {
+        cout << "Erreur : impossible de créer et/ou d'ouvrir le fichier spécifié." << endl;
+    }
+}
+
+void Catalogue::SauvegarderTrajetsParIndice() const
+{
+    string nomFichier;
+    cout << "Veuillez saisir le nom du fichier dans lequel vous souhaitez sauvegarder les trajets du catalogue :\r\n";
+    cin >> nomFichier;
+
+    if (!VerifierNomFichierSauvegarde(nomFichier))
+    {
+        return;
+    }
+
+    ofstream fichier("txt/" + nomFichier + ".txt", ios::out | ios::trunc);
+    if (fichier)
+    {
+        unsigned int indiceDebut;
+        unsigned int indiceFin;
+        cout << "Le catalogue contient " << collection.GetCardActuelle() << " trajets.\r\n\r\n";
+        do
+        {
+            cout << "Veuillez saisir l'indice du premier trajet à sauvegarder (compris entre 1 et " << collection.GetCardActuelle() << "):\r\n";
+            cin >> indiceDebut;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(256, '\n');
+                indiceDebut = -1;
+                cout << "Erreur : Veuillez saisir un nombre valide." << endl;
+            }
+        } while (indiceDebut < 1 || indiceDebut > collection.GetCardActuelle());
+
+        do
+        {
+            cout << "Veuillez saisir l'indice du dernier trajet à sauvegarder (compris entre " << indiceDebut << " et " << collection.GetCardActuelle() << "):\r\n";
+            cin >> indiceFin;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(256, '\n');
+                indiceFin = -1;
+                cout << "Erreur : Veuillez saisir un nombre valide." << endl;
+            }
+        } while (indiceFin > collection.GetCardActuelle() || indiceFin < indiceDebut);
+
+        fichier << indiceFin - indiceDebut + 1 << "\r\n";
+        for (unsigned int i = indiceDebut - 1; i < indiceFin; i++)
+        {
+            collection.GetTableau()[i]->Ecrire(fichier);
+        }
+        fichier.close();
+        return;
     }
     else
     {
