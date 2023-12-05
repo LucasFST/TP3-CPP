@@ -104,11 +104,6 @@ void Catalogue::RechercherTrajet() const
     }
 }
 
-void Catalogue::ImporterTrajets()
-{
-    // TODO
-}
-
 void Catalogue::SauvegarderTrajets()
 {
     // TODO : sauvegarder les trajets dans un fichier txt
@@ -177,7 +172,8 @@ void Catalogue::Menu()
             break;
         case 5:
             cout << "\r\n";
-            ImporterTrajets();
+            // ImporterTrajets("txt/test.txt", ToImport::COMPOSE);
+            ImporterTrajetsParVille("txt/test.txt", ParVille::DEPART, "Nantes");
             break;
         case 6:
             cout << "\r\n";
@@ -194,6 +190,156 @@ void Catalogue::Menu()
         }
     } while (choix != 7);
 }
+
+
+void Catalogue::ImporterTrajets(const std::string& filePath, ToImport toImport)
+{
+    std::ifstream file(filePath);
+    if (!file.is_open())
+    {
+        cerr << "Failed to open file: " << filePath << endl;
+        return;
+    }
+
+    std::string line;
+    std::getline(file, line);
+    int nb_line = stoi(line.substr(0, 1));
+    for (int i = 0; i < nb_line; i++)
+    {
+        std::getline(file, line);
+        int nb_traj = stoi(line.substr(0, 1));
+
+        if (nb_traj == 1 && (toImport == ToImport::SIMPLE || toImport == ToImport::TOUS))
+        {
+
+            line.erase(0, 2);
+            std::string depart = line.substr(0, line.find(","));
+            line.erase(0, line.find(",")+1);
+            std::string arrivee = line.substr(0, line.find(","));
+            line.erase(0, line.find(",")+1);
+            int moyen = stoi(line.substr(0, 1));
+            line.erase(0, 2);
+
+            TrajetSimple *ptrTrajet;
+            ptrTrajet = new TrajetSimple;
+            ptrTrajet->ImporterTrajetSimple(depart.c_str(), arrivee.c_str(), (MoyenTransport)moyen);
+            collection.Ajouter(ptrTrajet);
+        }
+        else if (nb_traj > 1 && (toImport == ToImport::COMPOSE || toImport == ToImport::TOUS))
+        {
+
+            TrajetCompose *ptrTrajetComp;
+            ptrTrajetComp = new TrajetCompose;
+        
+            for (int j = 0; j < nb_traj; j++)
+            {
+                std::getline(file, line);
+
+                line.erase(0, 2);
+                std::string depart = line.substr(0, line.find(","));
+                line.erase(0, line.find(",")+1);
+                std::string arrivee = line.substr(0, line.find(","));
+                line.erase(0, line.find(",")+1);
+                int moyen = stoi(line.substr(0, 1));
+                line.erase(0, 2);
+
+                TrajetSimple *ptrTrajet;
+                ptrTrajet = new TrajetSimple;
+                ptrTrajet->ImporterTrajetSimple(depart.c_str(), arrivee.c_str(), (MoyenTransport)moyen);
+                ptrTrajetComp->addTableau(ptrTrajet);
+
+            }
+            collection.Ajouter(ptrTrajetComp);
+        }
+    }
+
+    file.close();
+}
+
+void Catalogue::ImporterTrajetsParVille(const std::string& filePath, ParVille parVille, std::string ville)
+{
+    std::ifstream file(filePath);
+    if (!file.is_open())
+    {
+        cerr << "Failed to open file: " << filePath << endl;
+        return;
+    }
+
+    std::string line;
+    std::getline(file, line);
+    int nb_line = stoi(line.substr(0, 1));
+    for (int i = 0; i < nb_line; i++)
+    {
+        std::getline(file, line);
+        int nb_traj = stoi(line.substr(0, 1));
+
+        if (nb_traj == 1)
+        {
+
+            line.erase(0, 2);
+            std::string depart = line.substr(0, line.find(","));
+            line.erase(0, line.find(",")+1);
+            std::string arrivee = line.substr(0, line.find(","));
+            line.erase(0, line.find(",")+1);
+            int moyen = stoi(line.substr(0, 1));
+            line.erase(0, 2);
+
+            TrajetSimple *ptrTrajet;
+            ptrTrajet = new TrajetSimple;
+            ptrTrajet->ImporterTrajetSimple(depart.c_str(), arrivee.c_str(), (MoyenTransport)moyen);
+            if (parVille == ParVille::DEPART && strcmp(ptrTrajet->GetVilleDepart(), ville.c_str()) == 0)
+            {
+                collection.Ajouter(ptrTrajet);
+            }
+            else if (parVille == ParVille::ARRIVE && strcmp(ptrTrajet->GetVilleArrivee(), ville.c_str()) == 0)
+            {
+                collection.Ajouter(ptrTrajet);
+            } else if (parVille == ParVille::TOUTES && (strcmp(ptrTrajet->GetVilleArrivee(), ville.c_str()) == 0 || strcmp(ptrTrajet->GetVilleDepart(), ville.c_str()) == 0))
+            {
+                collection.Ajouter(ptrTrajet);
+            }
+        }
+        else if (nb_traj > 1)
+        {
+
+            TrajetCompose *ptrTrajetComp;
+            ptrTrajetComp = new TrajetCompose;
+        
+            for (int j = 0; j < nb_traj; j++)
+            {
+                std::getline(file, line);
+
+                line.erase(0, 2);
+                std::string depart = line.substr(0, line.find(","));
+                line.erase(0, line.find(",")+1);
+                std::string arrivee = line.substr(0, line.find(","));
+                line.erase(0, line.find(",")+1);
+                int moyen = stoi(line.substr(0, 1));
+                line.erase(0, 2);
+
+                TrajetSimple *ptrTrajet;
+                ptrTrajet = new TrajetSimple;
+                ptrTrajet->ImporterTrajetSimple(depart.c_str(), arrivee.c_str(), (MoyenTransport)moyen);
+                ptrTrajetComp->addTableau(ptrTrajet);
+
+            }
+            if (parVille == ParVille::DEPART && strcmp(ptrTrajetComp->GetVilleDepart(), ville.c_str()) == 0)
+            {
+                collection.Ajouter(ptrTrajetComp);
+            }
+            else if (parVille == ParVille::ARRIVE && strcmp(ptrTrajetComp->GetVilleArrivee(), ville.c_str()) == 0)
+            {
+                collection.Ajouter(ptrTrajetComp);
+            } else if (parVille == ParVille::TOUTES && (strcmp(ptrTrajetComp->GetVilleArrivee(), ville.c_str()) == 0 || strcmp(ptrTrajetComp->GetVilleDepart(), ville.c_str()) == 0))
+            {
+                collection.Ajouter(ptrTrajetComp);
+            }
+        }
+    }
+
+    file.close();
+}
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 

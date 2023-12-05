@@ -16,6 +16,20 @@
 
 //------------------------------------------------------------------ Types
 
+enum ToImport
+{
+    SIMPLE,
+    COMPOSE,
+    TOUS
+};
+
+enum ParVille
+{
+    ARRIVE,
+    DEPART,
+    TOUTES
+};
+
 //------------------------------------------------------------------------
 // Rôle de la classe <Catalogue>
 //
@@ -88,7 +102,9 @@ protected:
     // Contrat :
     //
 
-    void ImporterTrajets();
+    void ImporterTrajetsParVille(const std::string& filePath, ParVille parVille, std::string ville);
+
+    void ImporterTrajets(const std::string& filePath, ToImport toImport);
     // Mode d'emploi :
     //
     // Contrat :
@@ -99,6 +115,7 @@ protected:
     //
     // Contrat :
     //
+
 
     //----------------------------------------------------- Attributs protégés
     TableauDynamique collection;

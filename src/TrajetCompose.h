@@ -13,6 +13,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "Trajet.h"
 #include "TableauDynamique.h"
+#include "TrajetSimple.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -34,6 +35,7 @@ public:
     // Affiche les trajets simples du trajet composé
     // Contrat :
     //
+
 
     virtual void Saisir();
     // Mode d'emploi :
@@ -59,6 +61,8 @@ public:
     // Contrat :
     //
 
+    void addTableau(TrajetSimple *ptrTrajet);
+
     //------------------------------------------------- Surcharge d'opérateurs
     // TrajetCompose &operator=(const TrajetCompose &unTrajetCompose);
     // Mode d'emploi :
@@ -73,6 +77,8 @@ public:
     // Contrat :
     //
 
+
+
     TrajetCompose();
     // Mode d'emploi :
     //
@@ -84,6 +90,7 @@ public:
     //
     // Contrat :
     //
+    // TableauDynamique tableauTrajets;
 
     //------------------------------------------------------------------ PRIVE
 

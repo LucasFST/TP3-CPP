@@ -52,6 +52,25 @@ void TrajetSimple::Afficher() const
 
 } //----- Fin de Méthode
 
+void TrajetSimple::ImporterTrajetSimple(const char *villeDepartTmp, const char *villeArriveeTmp, MoyenTransport moyenTransportTmp)
+{
+    if (this->villeDepart != NULL)
+    {
+        delete[] this->villeDepart;
+    }
+    this->villeDepart = new char[strlen(villeDepartTmp) + 1];
+    strcpy(this->villeDepart, villeDepartTmp);
+
+    if (this->villeArrivee != NULL)
+    {
+        delete[] this->villeArrivee;
+    }
+    this->villeArrivee = new char[strlen(villeArriveeTmp) + 1];
+    strcpy(this->villeArrivee, villeArriveeTmp);
+
+    this->moyenTransport = (MoyenTransport)moyenTransportTmp;
+}
+
 void TrajetSimple::Saisir()
 {
     char *villeDepartTmp = new char[TAILLE_MAX_VILLE];
